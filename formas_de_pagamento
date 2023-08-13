@@ -1,0 +1,88 @@
+#include <stdio.h>
+
+#define COLUNAS 30
+
+void formas_de_pagamento_cliente(int qty_pagamento, int *ponteiro_pagar_cliente, int *ptr_numero_pag, char (*ptrMatriz)[COLUNAS], char (*ptr_formas_de_pagamento_do_cliente_str)[COLUNAS]) {
+    for (int i = 0; i < qty_pagamento; i++) {
+        int a = *(ponteiro_pagar_cliente + i);
+        int index = -1; // Inicializa com -1 para indicar que não encontrou nenhuma forma de pagamento
+        for (int x = 0; x < qty_pagamento; x++) {
+            int b = *(ptr_numero_pag + x);
+            if (b == a) {
+                index = x;
+                break;
+            }
+        }
+
+        if (index != -1) {
+            // Copiar a forma de pagamento do índice correspondente para a matriz do cliente
+            for (int j = 0; j < COLUNAS; j++) {
+                ptr_formas_de_pagamento_do_cliente_str[i][j] = ptrMatriz[index][j];
+            }
+        }
+    }
+}
+
+void forma_de_pagamento(int qty_pagamento, char (*ptrMatriz)[COLUNAS], int *ptr_numero_pag) {
+    for (int i = 0; i < qty_pagamento; i++) {
+        printf("Coloque a %d forma de pagamento: ", i + 1);
+        fgets(ptrMatriz[i], COLUNAS, stdin);
+
+        printf("Coloque o número de cadastro dessa forma de pagamento: ");
+        scanf("%d", &ptr_numero_pag[i]);
+        getchar();
+    }
+}
+
+int main() {
+    int qty_pagamento, qty_pagar_cliente;
+
+    printf("Quantas formas de pagamento você irá usar? ");
+    scanf("%d", &qty_pagamento);
+    getchar();
+
+    char matriz[qty_pagamento][COLUNAS];
+    int numero_pag[qty_pagamento];
+
+    char (*ptrMatriz)[COLUNAS];
+    int *ptr_numero_pag;
+
+    ptrMatriz = matriz;
+    ptr_numero_pag = numero_pag;
+
+    forma_de_pagamento(qty_pagamento, ptrMatriz, ptr_numero_pag);
+
+    printf("Quantas formas de pagamento você quer usar? ");
+    scanf("%d", &qty_pagar_cliente);
+
+    int numeros_formas_pag_cliente[qty_pagar_cliente];
+    int *ponteiro_pagar_cliente = numeros_formas_pag_cliente;
+
+    for (int i = 0; i < qty_pagar_cliente; i++) {
+        printf("Coloque o código da forma de pagamento %d: ", i + 1);
+        scanf("%d", &numeros_formas_pag_cliente[i]);
+    }
+
+    printf("Códigos das formas de pagamento do cliente:\n");
+    for (int i = 0; i < qty_pagar_cliente; i++) {
+        printf("%d\n", *(ponteiro_pagar_cliente + i));
+    }
+
+    char formas_de_pagamento_do_cliente_str[qty_pagar_cliente][COLUNAS];
+    char (*ptr_formas_de_pagamento_do_cliente_str)[COLUNAS] = formas_de_pagamento_do_cliente_str;
+
+    formas_de_pagamento_cliente(qty_pagamento, ponteiro_pagar_cliente, ptr_numero_pag, ptrMatriz, ptr_formas_de_pagamento_do_cliente_str);
+
+    /* as formas de pagamento pra utilizar na nota fiscal final estão armazenadas na matriz 
+    formas_de_pagamento_do_cliente_str, pra escrevê-las certinho, o código abaixo faz isso
+    
+    */
+
+    printf("\nFormas de pagamento do cliente:\n");
+    for (int i = 0; i < qty_pagar_cliente; i++) {
+        printf("%d: %s\n",i+1, formas_de_pagamento_do_cliente_str[i]);
+    }
+
+    return 0;
+}
+
