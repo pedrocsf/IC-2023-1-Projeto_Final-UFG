@@ -154,9 +154,6 @@ int main()
             strcpy(lista_compra_nomes[i], nome_produtos[i]);
         }
 
-
-        valorFinalDaCompra=valorFinalDaCompra+valorTotalDoPro;
-
         w++;
 
         printf("\n\n\n");
@@ -351,7 +348,7 @@ int main()
         printf("%.2f   %s   %.2f   %.2f   %.2f\n", lista_compra[y][1], lista_compra_nomes[y], lista_compra[y][2], lista_compra[y][3], lista_compra[y][4]);
     }
 
-    printf("Valor total da compra  Formas de pagamento");
-    
+    printf("Valor total da compra: %.2f \n", valorFinalDaCompra);
+
     return 0;
 }
