@@ -154,9 +154,6 @@ int main()
             strcpy(lista_compra_nomes[i], nome_produtos[i]);
         }
 
-
-        valorFinalDaCompra=valorFinalDaCompra+valorTotalDoPro;
-
         w++;
 
         printf("\n\n\n");
